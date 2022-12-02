@@ -1,5 +1,6 @@
 package com.muates.springbootgiris.controller;
 
+import com.muates.springbootgiris.model.converter.MemberConverter;
 import com.muates.springbootgiris.model.dto.request.CreateMemberRequest;
 import com.muates.springbootgiris.model.dto.request.UpdateMemberRequest;
 import com.muates.springbootgiris.model.dto.response.MemberResponse;
@@ -23,7 +24,7 @@ public class MemberController {
      */
     @PostMapping("/create")
     public MemberResponse createMember(@RequestBody CreateMemberRequest request) {
-        return memberService.createMember(request);
+        return MemberConverter.convertToResponse(memberService.createMember(request));
     }
 
     /**
@@ -34,14 +35,17 @@ public class MemberController {
      */
     @GetMapping("/{memberId}")
     public MemberResponse getMember(@PathVariable Long memberId) {
-        return memberService.getMember(memberId);
+        return MemberConverter.convertToResponse(memberService.getMember(memberId));
     }
 
     @PutMapping("/{memberId}")
     public MemberResponse updateMember(@PathVariable Long memberId,
                                        @RequestBody UpdateMemberRequest request) {
-        return memberService.updateMember(memberId, request);
+        return MemberConverter.convertToResponse(memberService.updateMember(memberId, request));
     }
 
-
+    @DeleteMapping("/{memberId}")
+    public void deleteMember(@PathVariable Long memberId) {
+        memberService.deleteMember(memberId);
+    }
 }

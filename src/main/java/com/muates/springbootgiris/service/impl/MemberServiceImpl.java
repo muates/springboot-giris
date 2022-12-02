@@ -21,28 +21,33 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
-    public MemberResponse createMember(CreateMemberRequest request) {
-        MemberEntity member = MemberConverter.convertToMember(request);
-        return MemberConverter.convertToResponse(memberRepository.save(member));
+    public MemberEntity createMember(CreateMemberRequest request) {
+        return memberRepository.save(MemberConverter.convertToMember(request));
     }
 
     @Override
-    public MemberResponse getMember(Long memberId) {
+    public MemberEntity getMember(Long memberId) {
         Optional<MemberEntity> member = memberRepository.findById(memberId);
         if (member.isEmpty())
             throw new GlobalException("Kullanıcı bulunamadı", HttpStatus.NOT_FOUND);
 
-        return MemberConverter.convertToResponse(member.get());
+        return member.get();
     }
 
     @Override
-    public MemberResponse updateMember(Long memberId, UpdateMemberRequest request) {
-        MemberEntity member = MemberConverter.convertToMember(memberId, request);
-        return MemberConverter.convertToResponse(memberRepository.save(member));
+    public MemberEntity updateMember(Long memberId, UpdateMemberRequest request) {
+        MemberEntity member = getMember(memberId);
+
+        if (request.getPhone() != null) member.setPhone(request.getPhone());
+        if (request.getPhoneCode() != null) member.setPhoneCode(request.getPhoneCode());
+        if (request.getEmail() != null) member.setEmail(request.getEmail());
+
+        return memberRepository.save(member);
     }
 
     @Override
     public void deleteMember(Long id) {
+        // todo : tekrardan gözden geçirilecek
         memberRepository.deleteById(id);
     }
 }

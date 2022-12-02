@@ -1,7 +1,6 @@
 package com.muates.springbootgiris.model.converter;
 
 import com.muates.springbootgiris.model.dto.request.CreateMemberRequest;
-import com.muates.springbootgiris.model.dto.request.UpdateMemberRequest;
 import com.muates.springbootgiris.model.dto.response.MemberResponse;
 import com.muates.springbootgiris.model.entity.MemberEntity;
 import com.muates.springbootgiris.model.enums.GenderEnum;
@@ -20,21 +19,6 @@ public class MemberConverter {
                 .phone(request.getPhone())
                 .gender(convertToGender(request.getGender()))
                 .build();
-    }
-
-    public static MemberEntity convertToMember(Long memberId,
-                                               UpdateMemberRequest request) {
-        if (request == null)
-            return null;
-
-        MemberEntity member = new MemberEntity();
-
-        member.setId(memberId);
-        if (request.getPhone() != null) member.setPhone(request.getPhone());
-        if (request.getPhoneCode() != null) member.setPhoneCode(request.getPhoneCode());
-        if (request.getEmail() != null) member.setEmail(request.getEmail());
-
-        return member;
     }
 
     public static MemberResponse convertToResponse(MemberEntity member) {
