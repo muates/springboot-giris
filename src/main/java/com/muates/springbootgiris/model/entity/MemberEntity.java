@@ -1,5 +1,6 @@
 package com.muates.springbootgiris.model.entity;
 
+import com.muates.springbootgiris.model.enums.GenderEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,10 +28,23 @@ public class MemberEntity implements Serializable {
     @Column(name = "last_name", length = 20)
     private String lastName;
 
+    @Column(name = "email", length = 50)
+    private String email;
+
+    @Column(name = "phone_code", length = 4)
+    private String phoneCode;
+
+    @Column(name = "phone", length = 7)
+    private String phone;
+
     @Column(name = "age", length = 3)
     private String age;
 
-    @Column(name = "gender", length = 5)
-    private String gender;
+    @Column(name = "gender")
+    @Enumerated(EnumType.ORDINAL)
+    private GenderEnum gender;
+
+    @Column(name = "is_active")
+    private boolean isActive;
 
 }

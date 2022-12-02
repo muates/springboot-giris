@@ -30,9 +30,13 @@ public class AspectConfig {
 
     @Around(value = "execution(* com.muates.springbootgiris.service.impl.*.*(..))")
     public Object taskHandler(ProceedingJoinPoint joinPoint) throws Throwable {
+        long startTime = System.currentTimeMillis();
 
         try {
-            return joinPoint.proceed();
+            Object obj = joinPoint.proceed();
+            long timeTaken = System.currentTimeMillis() - startTime;
+            logger.info("Time taken by {} is {}", joinPoint, timeTaken);
+            return obj;
         } catch (GlobalException e) {
             logger.error("Exception Message {}", e.getMessage());
             logger.error("Exception Status {}", e.getStatus());

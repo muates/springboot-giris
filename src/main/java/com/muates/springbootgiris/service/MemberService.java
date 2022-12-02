@@ -1,10 +1,13 @@
 package com.muates.springbootgiris.service;
 
-import com.muates.springbootgiris.model.entity.MemberEntity;
+import com.muates.springbootgiris.model.dto.request.CreateMemberRequest;
+import com.muates.springbootgiris.model.dto.request.UpdateMemberRequest;
+import com.muates.springbootgiris.model.dto.response.MemberResponse;
 
 public interface MemberService {
 
-    MemberEntity createMember(MemberEntity member);
-    MemberEntity getMember(Long id);
+    MemberResponse createMember(CreateMemberRequest request);
+    MemberResponse getMember(Long id);
+    MemberResponse updateMember(Long id, UpdateMemberRequest request);
     void deleteMember(Long id);
 }
