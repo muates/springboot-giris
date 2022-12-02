@@ -4,16 +4,18 @@ import com.muates.springbootgiris.exception.GlobalException;
 import com.muates.springbootgiris.model.converter.MemberConverter;
 import com.muates.springbootgiris.model.dto.request.CreateMemberRequest;
 import com.muates.springbootgiris.model.dto.request.UpdateMemberRequest;
-import com.muates.springbootgiris.model.dto.response.MemberResponse;
 import com.muates.springbootgiris.model.entity.MemberEntity;
 import com.muates.springbootgiris.repository.MemberRepository;
 import com.muates.springbootgiris.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -26,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public MemberEntity getMember(Long memberId) {
         Optional<MemberEntity> member = memberRepository.findById(memberId);
         if (member.isEmpty())
@@ -41,6 +44,8 @@ public class MemberServiceImpl implements MemberService {
         if (request.getPhone() != null) member.setPhone(request.getPhone());
         if (request.getPhoneCode() != null) member.setPhoneCode(request.getPhoneCode());
         if (request.getEmail() != null) member.setEmail(request.getEmail());
+
+        member.setUpdatedDate(new Date());
 
         return memberRepository.save(member);
     }

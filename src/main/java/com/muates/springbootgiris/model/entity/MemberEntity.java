@@ -6,16 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "members")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class MemberEntity implements Serializable {
+@SuperBuilder
+public class MemberEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

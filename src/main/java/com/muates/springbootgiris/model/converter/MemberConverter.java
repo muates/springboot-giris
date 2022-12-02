@@ -5,6 +5,8 @@ import com.muates.springbootgiris.model.dto.response.MemberResponse;
 import com.muates.springbootgiris.model.entity.MemberEntity;
 import com.muates.springbootgiris.model.enums.GenderEnum;
 
+import java.util.Date;
+
 public class MemberConverter {
 
     public static MemberEntity convertToMember(CreateMemberRequest request) {
@@ -18,6 +20,7 @@ public class MemberConverter {
                 .phoneCode(request.getPhoneCode())
                 .phone(request.getPhone())
                 .gender(convertToGender(request.getGender()))
+                .createdDate(new Date())
                 .build();
     }
 
